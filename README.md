@@ -1,37 +1,31 @@
-# Svelte Typescript Boilerplate
+# TODO App
 
-This is a project template for [Svelte](https://svelte.dev) apps.
 
-### Featuring
-- [Svelte](https://svelte.dev/)
-- [Typescript](https://www.typescriptlang.org/)
-- [Tailwind](https://tailwindcss.com/)
-- [Jest](https://jestjs.io/)
-- [Svelte Testing Library](https://testing-library.com/docs/svelte-testing-library/intro/)
-- [Eslint](https://eslint.org/)
-- [Prettier](https://prettier.io/)
-- [Rollup](https://rollupjs.org)
+URL: https://todo-ten-mu.vercel.app
 
 
 
-# Pre-requisite
+## Development
+
+### Pre-requisite
 
 - Install [NodeJS 16.10+](https://nodejs.org/en/download/)
 - Install Yarn 1.2x
     ```sh
     npm global install yarn
     ```
+<br />
 
-## Get started
+### Get started
 
 - Clone the Repo
     ```bash
-    git clone https://github.com/wadehrarshpreet/svelte-typescript-boilerplace.git <project-name>
+    git clone https://github.com/wadehrarshpreet/todo.git
     ```
 
 - go to project directoy and install dependencies
     ```bash
-    cd <project-name> && yarn
+    cd todo && yarn
     rm -rf .git # remove .git
     git init # setup new git repo
     ```
@@ -47,8 +41,9 @@ By default, the server will only respond to requests from localhost. To allow co
 
 If you're using [Visual Studio Code](https://code.visualstudio.com/) we recommend installing the official extension [Svelte for VS Code](https://marketplace.visualstudio.com/items?itemName=svelte.svelte-vscode). If you are using other editors you may need to install a plugin in order to get syntax highlighting and intellisense.
 
+<br />
 
-## Building and running in production mode
+### Building and running in production mode
 
 To create an optimised version of the app:
 
@@ -71,69 +66,30 @@ If you're building a single-page app (SPA) with multiple routes, sirv needs to b
 
 ----
 
-<br />
-
-> If you want to use `baseUrl` or `path` aliases within your `tsconfig`, you need to set up `@rollup/plugin-alias` to tell Rollup to resolve the aliases. For more info, see [this StackOverflow question](https://stackoverflow.com/questions/63427935/setup-tsconfig-path-in-svelte).
-
 
 <br />
 
-## Deploying to the web
+## Deployment
 
-### With [Vercel](https://vercel.com)
+We are using [vercel](https://vercel.com/)
 
-Install `vercel` if you haven't already:
+[Github Action](.github/workflows/deploy.yml) is in place which deploy on every push to `main` branch
 
-```bash
-npm install -g vercel
-```
+Set Following Secrets to make sure deployment works
+- VERCEL_TOKEN (access token)
+- VERCEL_PROJECT_ID (project id)
+- VERCEL_ORG_ID (account id)
 
-Then, from within your project folder:
 
-```bash
-cd public
-vercel deploy --name my-project
-```
 
-### With [surge](https://surge.sh/)
-
-Install `surge` if you haven't already:
-
-```bash
-npm install -g surge
-```
-
-Then, from within your project folder:
-
-```bash
-npm run build
-surge public my-project.surge.sh
-```
-
-### With [firebase](https://firebase.google.com/)
-
-Install `firebase-cli` if you haven't already:
-
-```sh
-curl -sL https://firebase.tools | bash
-```
-
-Login to your account
-```sh
-firebase login
-```
-
-Then, from within your project folder:
-```sh
-firebase init hosting # set public folder to deploy
-npm run build
-firebase deploy
-```
+<br />
 
 ## Links
-* [https://wadehrarshpreet.com](https://wadehrarshpreet.com)
-* [LinkedIn](https://www.linkedin.com/in/wadehrarshpreet/)
-* [Twitter](https://twitter.com/wadehrarshpreet/)
+- UX inspire by [Alex Arutuynov](https://dribbble.com/shots/14100356-ToDo-App-UI)
+- Boilerplate [Svelte-typescript-boilerplate](https://github.com/wadehrarshpreet/svelte-typescript-boilerplace)
+- [Twitter](https://twitter.com/wadehrarshpreet/)
+- [LinkedIn](https://www.linkedin.com/in/wadehrarshpreet/)
+- [https://wadehrarshpreet.com](https://wadehrarshpreet.com)
 
 ## License
 
