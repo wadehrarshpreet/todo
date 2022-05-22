@@ -2,7 +2,7 @@ import { writable, derived } from 'svelte/store';
 import type { Writable, Readable } from 'svelte/store';
 
 /**
- * Router class
+ * Minimal Router
  */
 class Router {
   history: Writable<Array<{ path: string }>>;
@@ -10,15 +10,16 @@ class Router {
   window: Window;
 
   constructor() {
-    this.history = writable([]);
+    const path = window.location.pathname;
+    this.history = writable([{ path: path }]);
     this.activePath = derived(this.history, history => {
       return history?.[0]?.path || '';
     });
     window.addEventListener('popstate', this.pop);
   }
 
-  push = updatePath => {
-    window.history.pushState({}, null, ``);
+  push = (updatePath: string) => {
+    window.history.pushState({}, null, updatePath);
     this.history.update(existing => [{ path: updatePath }, ...existing]);
     return;
   };
