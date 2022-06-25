@@ -11,7 +11,7 @@
 <Drawer />
 <main class="bg-navbar min-h-screen z-0">
   <div
-    class={`bg-background min-h-screen overflow-x-hidden p-4 fixed top-0 left-0 w-screen transition-[left_0.7s]  z-10 duration-[0.5s] ${
+    class={`bg-background h-screen overflow-x-hidden p-4 fixed top-0 left-0 w-screen transition-[left_0.7s]  z-10 duration-[0.5s] ${
       $drawerState
         ? 'animate-containerPulse rounded-[40px] left-[75%] md:left-[25%] min-h-[90vh] h-[90vh] top-[5%]'
         : $drawerState === false
@@ -22,8 +22,8 @@
       if ($drawerState) $drawerState = false;
     }}
   >
-    <Header />
-    <div class="container mt-4">
+    <Header drawerOpen={$drawerState} />
+    <div class={`container ${$drawerState ? 'mt-4' : 'mt-14'}`}>
       {#if $activePath === '/'}
         <Home />
       {:else if $activePath === '/categories'}

@@ -1,6 +1,8 @@
 <script lang="ts">
+  import FloatAdd from 'components/FloatAdd.svelte';
+  import TaskList from './TaskList.svelte';
   import UserData from 'data/userData';
-  import { categories } from 'store/categoriesStore';
+  import { categories, tasks } from 'store/appStore';
 </script>
 
 <div class="font-bold text-4xl">What's up, {UserData.name.split(' ')[0]}!</div>
@@ -32,5 +34,27 @@
   </div>
 </div>
 <div class="mt-8">
-  <div class="uppercase text-secondary-dark">Today's Tasks</div>
+  <div class="grid grid-cols-1 gap-4 md:grid-cols-2">
+    <div>
+      <div class="uppercase text-secondary-dark text-sm font-bold">Today's Tasks</div>
+      <TaskList tasks={$tasks.today.tasks} />
+      <div class="uppercase text-secondary-dark text-sm font-bold mt-4">Tasks Past Due Date</div>
+      <TaskList isPast={true} tasks={$tasks.past.tasks} />
+    </div>
+    <div>
+      {#if $tasks.tomorrow.tasks.length}
+        <div class="uppercase text-secondary-dark text-sm font-bold">Tomorrow's Tasks</div>
+        <TaskList tasks={$tasks.tomorrow.tasks} />
+      {/if}
+      {#if $tasks.month.tasks.length}
+        <div class="uppercase text-secondary-dark text-sm font-bold mt-4">This Month's Tasks</div>
+        <TaskList tasks={$tasks.month.tasks} />
+      {:else if $tasks.future.tasks.length}
+        <div class="uppercase text-secondary-dark text-sm font-bold mt-4">Future Tasks</div>
+        <TaskList tasks={$tasks.future.tasks} />
+      {/if}
+    </div>
+  </div>
 </div>
+
+<FloatAdd />

@@ -3,9 +3,15 @@
   import Search from 'svelte-material-icons/Magnify.svelte';
   import Alert from 'svelte-material-icons/Bell.svelte';
   import { drawerState } from 'store/headerState';
+
+  export let drawerOpen = false;
 </script>
 
-<header class="relative top-0 left-0 w-full flex justify-between text-secondary text-2xl z-20">
+<header
+  class={`top-0 left-0 w-full flex justify-between text-secondary text-2xl z-20 ${
+    drawerOpen ? 'relative' : 'fixed p-4 bg-background'
+  }`}
+>
   <div>
     <span
       class="cursor-pointer"

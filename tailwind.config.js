@@ -5,6 +5,7 @@ module.exports = {
     extend: {
       backgroundImage: {
         navbarImage: 'conic-gradient(#da1b8d calc(var(--nav-progress) * 1%), #ababbe 0)',
+        strikethrough: 'linear-gradient(transparent calc(100% - 1px), #78787c 1px)',
       },
       animation: {
         navProgress: 'navProgress 4s 1 forwards',
@@ -45,6 +46,7 @@ module.exports = {
         secondary: '#ababbe',
         'secondary-dark': '#78787c',
         navbar: '#0d2360',
+        cta: '#0961d2',
       },
     },
   },
