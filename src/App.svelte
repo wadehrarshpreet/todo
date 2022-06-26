@@ -24,10 +24,10 @@
   >
     <Header drawerOpen={$drawerState} />
     <div class={`container ${$drawerState ? 'mt-4' : 'mt-14'}`}>
-      {#if $activePath === '/'}
+      {#if $activePath === '/categories'}
+        <div>categories #TODO</div>
+      {:else}
         <Home />
-      {:else if $activePath === '/categories'}
-        <div>categories</div>
       {/if}
     </div>
   </div>

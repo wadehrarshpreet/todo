@@ -53,6 +53,7 @@
               }); border: 1px solid ${$categories[task.category].color}`}
             >
               <Checkbox
+                color="{$categories[task.category].color};"
                 on:click={() => {
                   if (!isSliding) {
                     invertTaskDoneStatus(task.id);

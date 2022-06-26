@@ -21,3 +21,17 @@ export function deleteTask(taskId: string, deletion = true) {
     });
   });
 }
+
+export function addTask(taskData: {
+  id: string;
+  label: string;
+  done?: boolean;
+  category: string;
+  dueDate: Date;
+  createdAt?: number;
+  delete?: number;
+}) {
+  allTasks.update(existing => {
+    return [{ ...taskData, done: false, delete: 0, createdAt: new Date().getTime() }, ...existing];
+  });
+}

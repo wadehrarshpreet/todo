@@ -1,10 +1,12 @@
 <script lang="ts">
-  import FloatAdd from 'components/FloatAdd.svelte';
+  import FloatIcon from 'components/FloatIcon.svelte';
   import TaskList from './TaskList.svelte';
   import UserData from 'data/userData';
   import { categories, selectedCategory, tasks } from 'store/appStore';
+  import AddTask from './AddTask.svelte';
 
   let categoryKey = Object.keys($categories);
+  let addTaskForm = true;
 
   $: categoryKey = Object.keys($categories);
 </script>
@@ -72,4 +74,13 @@
   </div>
 </div>
 
-<FloatAdd />
+{#if addTaskForm}
+  <AddTask onHide={() => (addTaskForm = false)} />
+{/if}
+
+<FloatIcon
+  type="add"
+  on:click={() => {
+    addTaskForm = true;
+  }}
+/>
