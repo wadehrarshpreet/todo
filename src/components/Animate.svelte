@@ -1,7 +1,7 @@
 <script>
   import { spring } from 'svelte/motion';
-  import swipe from 'svelte-swipeable';
   import { tick } from 'svelte';
+  import swipe from 'utils/swipe';
   // Props
   export let stiffness = null;
   export let damping = null;

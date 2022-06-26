@@ -2,16 +2,31 @@
   import FloatAdd from 'components/FloatAdd.svelte';
   import TaskList from './TaskList.svelte';
   import UserData from 'data/userData';
-  import { categories, tasks } from 'store/appStore';
+  import { categories, selectedCategory, tasks } from 'store/appStore';
+
+  let categoryKey = Object.keys($categories);
+
+  $: categoryKey = Object.keys($categories);
 </script>
 
 <div class="font-bold text-4xl">What's up, {UserData.name.split(' ')[0]}!</div>
 <div class="mt-6 text-sm font-bold text-secondary uppercase">Categories</div>
 <!-- Slider -->
 <div class="overflow-x-auto max-w-full pb-4">
-  <div class="flex" style={`width: ${$categories.length * 10}rem;`}>
-    {#each $categories as category (category.id)}
-      <div class="bg-white shadow-md p-4 flex flex-col rounded-lg mr-4 w-40">
+  <div class="flex" style={`width: ${categoryKey.length * 10}rem;`}>
+    {#each categoryKey as categoryId (categoryId)}
+      {@const category = $categories[categoryId]}
+      <div
+        class="bg-white shadow-md p-4 flex flex-col rounded-lg mr-4 w-40 cursor-pointer"
+        style={`border: ${$selectedCategory === categoryId ? `1px solid ${category.color}` : ''}`}
+        on:click={() => {
+          if ($selectedCategory === categoryId) {
+            $selectedCategory = '';
+            return;
+          }
+          $selectedCategory = categoryId;
+        }}
+      >
         <div class="text-secondary-dark text-sm">{category.total} tasks</div>
         <div class="text-xl font-bold mb-3">{category.label}</div>
         <div class="relative">

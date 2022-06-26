@@ -4,7 +4,12 @@
   import Constant from 'constant';
   import { drawerState } from 'store/headerState';
   import router from 'router';
-  let progress = 20;
+  import { taskProgress } from 'store/appStore';
+
+  let progress = $taskProgress;
+
+  $: progress = $taskProgress;
+
 
   function animateProgress(node, { progress }) {
     return {
@@ -61,7 +66,7 @@
             router.push(navItem.action);
             $drawerState = false;
           }}
-          class="mb-3 flex text-xl items-center"
+          class="mb-3 flex text-xl items-center hover:text-white cursor-pointer"
         >
           <span class="text-secondary-dark">
             <svelte:component this={navItem.icon} />
