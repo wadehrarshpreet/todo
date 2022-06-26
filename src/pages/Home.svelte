@@ -6,7 +6,7 @@
   import AddTask from './AddTask.svelte';
 
   let categoryKey = Object.keys($categories);
-  let addTaskForm = true;
+  let addTaskForm = false;
 
   $: categoryKey = Object.keys($categories);
 </script>

@@ -104,8 +104,8 @@
 <style>
   :global(.date-time-field input) {
     height: 46px;
-    border-radius: 1rem;
-    padding-left: 2.5rem;
-    width: 160px;
+    border-radius: 1rem !important;
+    padding-left: 2.5rem !important;
+    width: 160px !important;
   }
 </style>
