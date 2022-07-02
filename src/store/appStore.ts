@@ -4,7 +4,14 @@ import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
 import updateLocale from 'dayjs/plugin/updateLocale';
 import isToday from 'dayjs/plugin/isToday';
-import { derived, get, Writable, writable } from 'svelte/store';
+import { derived, Writable, writable } from 'svelte/store';
+
+function resetCount(categoryData: typeof categoryMap) {
+  return Object.keys(categoryData).reduce((acc, key) => {
+    acc[key] = { ...categoryData[key], total: 0, completed: 0 };
+    return acc;
+  }, {});
+}
 
 dayjs.extend(relativeTime);
 dayjs.extend(updateLocale);
@@ -27,6 +34,7 @@ type tasksData = {
   week: taskDataByTime;
   month: taskDataByTime;
   future: taskDataByTime;
+  categories: typeof categoryMap;
 };
 
 const categoryMap: {
@@ -44,6 +52,7 @@ const categoryMap: {
   };
 }, {});
 
+// only for set
 export const categories = writable(categoryMap);
 
 export const allTasks = writable(taskData);
@@ -52,9 +61,8 @@ export const selectedCategory: Writable<string> = writable('');
 
 export const taskProgress = writable(0);
 
-export const tasks = derived([allTasks], ([$allTasks]) => {
-  const categoryData = get(categories);
-  const categoryDataMap = { ...categoryData };
+export const appData = derived([allTasks, categories], ([$allTasks, $categories]) => {
+  const categoryDataMap = resetCount($categories);
   let done = 0;
   let total = 0;
   // process and form Data structure consumable by app
@@ -83,6 +91,7 @@ export const tasks = derived([allTasks], ([$allTasks]) => {
       label: "Somewhere in Future's Tasks",
       tasks: [],
     },
+    categories: categoryDataMap,
   };
 
   $allTasks.forEach(task => {
@@ -94,9 +103,9 @@ export const tasks = derived([allTasks], ([$allTasks]) => {
     }
     const isPast = dueDate.isBefore(dayjs());
     if (categoryDataMap[task.category]) {
-      categoryDataMap[task.category].total += 1;
+      finalObj.categories[task.category].total += 1;
       if (task.done) {
-        categoryDataMap[task.category].completed += 1;
+        finalObj.categories[task.category].completed += 1;
       }
     }
     if (isPast) {
@@ -125,13 +134,13 @@ export const tasks = derived([allTasks], ([$allTasks]) => {
     // sort once
     sorted = true;
     Object.keys(finalObj).forEach(key => {
-      (finalObj[key] as taskDataByTime).tasks.sort((a, b) => {
-        return a.done ? 1 : b.done ? -1 : 0;
-      });
+      if (Array.isArray(finalObj[key].label)) {
+        (finalObj[key] as taskDataByTime).tasks.sort((a, b) => {
+          return a.done ? 1 : b.done ? -1 : 0;
+        });
+      }
     });
   }
-
-  categories.set(categoryDataMap);
 
   taskProgress.set((done * 100) / total);
   // sort tasks pending at top

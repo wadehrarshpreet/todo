@@ -4,12 +4,13 @@
   import Drawer from 'components/Drawer.svelte';
   import Home from 'pages/Home.svelte';
   import router from 'router';
+  import Category from 'pages/Category.svelte';
 
   const activePath = router.activePath;
 </script>
 
 <Drawer />
-<main class="bg-navbar min-h-screen z-0">
+<main class="bg-navbar min-h-screen z-0 max-w-screen-2xl">
   <div
     class={`bg-background h-screen overflow-x-hidden p-4 fixed top-0 left-0 w-screen transition-[left_0.7s]  z-10 duration-[0.5s] ${
       $drawerState
@@ -23,9 +24,9 @@
     }}
   >
     <Header drawerOpen={$drawerState} />
-    <div class={`container ${$drawerState ? 'mt-4' : 'mt-14'}`}>
+    <div class={`container !max-w-screen-xl m-auto ${$drawerState ? 'mt-4' : 'mt-14'}`}>
       {#if $activePath === '/categories'}
-        <div>categories #TODO</div>
+        <Category />
       {:else}
         <Home />
       {/if}

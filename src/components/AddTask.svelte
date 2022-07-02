@@ -9,6 +9,7 @@
   import Select from 'svelte-select';
   import { categories } from 'store/appStore';
   import { addTask } from 'helper/tasks';
+  import router from 'router';
 
   export let onHide;
 
@@ -24,10 +25,8 @@
     return $categories[category];
   });
 
-  $: console.log(myDate);
-
   onMount(() => {
-    history.pushState('', '', ``);
+    router.linkHistoryWithModal(onHide);
   });
 </script>
 

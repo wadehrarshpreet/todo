@@ -1,7 +1,7 @@
 <script lang="ts">
   import Menu from 'svelte-material-icons/Menu.svelte';
-  import Search from 'svelte-material-icons/Magnify.svelte';
-  import Alert from 'svelte-material-icons/Bell.svelte';
+  // import Search from 'svelte-material-icons/Magnify.svelte';
+  // import Alert from 'svelte-material-icons/Bell.svelte';
   import { drawerState } from 'store/headerState';
 
   export let drawerOpen = false;
@@ -23,12 +23,12 @@
       <Menu />
     </span>
   </div>
-  <div class="flex">
+  <!-- <div class="flex">
     <span class="cursor-pointer">
       <Search />
     </span>
     <span class="cursor-pointer ml-3">
       <Alert />
     </span>
-  </div>
+  </div> -->
 </header>
