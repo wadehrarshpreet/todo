@@ -7,6 +7,10 @@
   import CategoryList from 'components/CategoryList.svelte';
 
   let addTaskForm = false;
+
+  function showAddTaskForm() {
+    addTaskForm = true;
+  }
 </script>
 
 <div class="font-bold text-4xl">What's up, {UserData.name.split(' ')[0]}!</div>
@@ -17,9 +21,11 @@
   <div class="grid grid-cols-1 gap-4 md:grid-cols-2">
     <div>
       <div class="uppercase text-secondary-dark text-sm font-bold">Today's Tasks</div>
-      <TaskList tasks={$appData.today.tasks} />
-      <div class="uppercase text-secondary-dark text-sm font-bold mt-4">Tasks Past Due Date</div>
-      <TaskList isPast={true} tasks={$appData.past.tasks} />
+      <TaskList {showAddTaskForm} tasks={$appData.today.tasks} />
+      {#if $appData.past.tasks.length}
+        <div class="uppercase text-secondary-dark text-sm font-bold mt-4">Tasks Past Due Date</div>
+        <TaskList isPast={true} tasks={$appData.past.tasks} />
+      {/if}
     </div>
     <div>
       {#if $appData.tomorrow.tasks.length}

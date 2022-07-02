@@ -1,12 +1,12 @@
-import categoriesData from 'data/categoriesData';
-import taskData from 'data/taskData';
+import categoriesData, { updateCategoryInStorage } from 'data/categoriesData';
+import taskData, { updateItemInStorage } from 'data/taskData';
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
 import updateLocale from 'dayjs/plugin/updateLocale';
 import isToday from 'dayjs/plugin/isToday';
 import { derived, Writable, writable } from 'svelte/store';
 
-function resetCount(categoryData: typeof categoryMap) {
+function resetCount(categoryData: typeof categoriesData) {
   return Object.keys(categoryData).reduce((acc, key) => {
     acc[key] = { ...categoryData[key], total: 0, completed: 0 };
     return acc;
@@ -22,7 +22,15 @@ dayjs.extend(isToday);
 
 type taskDataByTime = {
   label: string;
-  tasks: Array<typeof taskData[0]>;
+  tasks: Array<{
+    id: string;
+    label: string;
+    done: boolean;
+    category: string;
+    dueDate: Date;
+    createdAt: number;
+    delete: number;
+  }>;
 };
 
 let sorted = false;
@@ -34,28 +42,13 @@ type tasksData = {
   week: taskDataByTime;
   month: taskDataByTime;
   future: taskDataByTime;
-  categories: typeof categoryMap;
+  categories: typeof categoriesData;
 };
 
-const categoryMap: {
-  [x: string]: {
-    id: string;
-    label: string;
-    color: string;
-    total: number;
-    completed: number;
-  };
-} = categoriesData.reduce((acc, value, index) => {
-  return {
-    ...acc,
-    [value.id]: { ...value, order: index, total: 0, completed: 0 },
-  };
-}, {});
-
 // only for set
-export const categories = writable(categoryMap);
+export const categories = writable(categoriesData);
 
-export const allTasks = writable(taskData);
+export const allTasks: Writable<taskDataByTime['tasks']> = writable(taskData);
 
 export const selectedCategory: Writable<string> = writable('');
 
@@ -65,6 +58,7 @@ export const appData = derived([allTasks, categories], ([$allTasks, $categories]
   const categoryDataMap = resetCount($categories);
   let done = 0;
   let total = 0;
+  updateItemInStorage($allTasks);
   // process and form Data structure consumable by app
   const finalObj: tasksData = {
     past: {
@@ -141,6 +135,7 @@ export const appData = derived([allTasks, categories], ([$allTasks, $categories]
       }
     });
   }
+  updateCategoryInStorage(finalObj.categories);
 
   taskProgress.set((done * 100) / total);
   // sort tasks pending at top

@@ -1,4 +1,5 @@
 <script>
+  import Plus from 'svelte-material-icons/Plus.svelte';
   import Delete from 'svelte-material-icons/Delete.svelte';
   import Checkbox from 'components/Checkbox.svelte';
   import Animate from 'components/Animate.svelte';
@@ -8,6 +9,7 @@
 
   export let tasks = [];
   export let isPast = false;
+  export let showAddTaskForm = () => {};
   const showDeleteOption = {};
   let isSliding = false;
 </script>
@@ -92,5 +94,14 @@
         </Animate>
       </div>
     {/if}
+  {:else}
+    <div
+      class="text-lg font-bold flex items-center mt-3"
+      on:click={() => {
+        showAddTaskForm?.();
+      }}
+    >
+      Click here to <span><Plus size="1.4rem" /></span>add Task
+    </div>
   {/each}
 </div>
