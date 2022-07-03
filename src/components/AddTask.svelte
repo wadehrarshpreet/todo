@@ -25,6 +25,19 @@
     return $categories[category];
   });
 
+  function trySubmit() {
+    if (!value) {
+      return;
+    }
+    addTask({
+      category: selectedCategory.id,
+      id: new Date().getTime() + ` ${selectedCategory.id}`,
+      label: value,
+      dueDate: dayjs(myDate).endOf('day').toDate(),
+    });
+    onHide();
+  }
+
   onMount(() => {
     router.linkHistoryWithModal(onHide);
   });
@@ -56,6 +69,11 @@
         placeholder="Enter new task"
         type="text"
         bind:value
+        on:keydown={event => {
+          if (event.keyCode === 13) {
+            trySubmit();
+          }
+        }}
         class="border-0 outline-none w-full text-xl "
         autofocus
       />
@@ -83,16 +101,7 @@
     </div>
     <FloatIcon
       on:click={() => {
-        if (!value) {
-          return;
-        }
-        addTask({
-          category: selectedCategory.id,
-          id: new Date().getTime() + ` ${selectedCategory.id}`,
-          label: value,
-          dueDate: dayjs(myDate).endOf('day').toDate(),
-        });
-        onHide();
+        trySubmit();
       }}
       label="New Task"
       labelClass="pr-2 uppercase"

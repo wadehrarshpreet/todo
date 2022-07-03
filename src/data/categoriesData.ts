@@ -34,8 +34,8 @@ let categoryMap: {
 }, {});
 
 try {
-  if (localStorage.getItem('todo_category_data')) {
-    categoryMap = JSON.parse(localStorage.getItem('todo_category_data'));
+  if (localStorage.getItem(KEY)) {
+    categoryMap = JSON.parse(localStorage.getItem(KEY));
   } else {
     localStorage.setItem(KEY, JSON.stringify(categoryMap));
   }
